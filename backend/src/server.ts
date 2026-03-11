@@ -34,14 +34,14 @@ app.get('/health', (req, res) => {
 });
 
 // API Routes
-app.use('/auth', authRoutes);
-app.use('/equipment', equipmentRoutes);
-app.use('/checklists', checklistsRoutes);
-app.use('/inspections', inspectionsRoutes);
-app.use('/faults', faultsRoutes);
-app.use('/media', mediaRoutes);
-app.use('/users', usersRoutes);
-app.use('/invitations', invitationsRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/equipment', equipmentRoutes);
+app.use('/api/checklists', checklistsRoutes);
+app.use('/api/inspections', inspectionsRoutes);
+app.use('/api/faults', faultsRoutes);
+app.use('/api/media', mediaRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/invitations', invitationsRoutes);
 
 // Error Handling Middleware (must be last)
 app.use(errorHandler);
