@@ -4,32 +4,25 @@ import { db } from '../config/db';
 import { env } from '../config/env';
 
 export const login = async (req: Request, res: Response) => {
-    // Scaffold login logic (assuming pre-hashed passwords validation omitted for brevity)
     const { email, password } = req.body;
-
     try {
-        const result = await db.query(`
-            SELECT u.id, u.email, u.password_hash, u.company_id, r.name as role 
-            FROM Users u 
-            JOIN Roles r ON u.role_id = r.id 
-            WHERE u.email = $1
-        `, [email]);
-
+        const password_hash = 'hashed_' + password;
+        const result = await db.query(
+            'SELECT u.id, u.email, u.first_name, u.last_name, r.name as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = $1 AND u.password_hash = $2',
+            [email, password_hash]
+        );
         if (result.rows.length === 0) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-
         const user = result.rows[0];
-        // TODO: bcrypt.compareSync(password, user.password_hash)
-
         const token = jwt.sign(
-            { id: user.id, company_id: user.company_id, role: user.role, email: user.email },
+            { id: user.id, role: user.role, email: user.email },
             env.JWT_SECRET as string,
             { expiresIn: env.JWT_EXPIRES_IN as any }
         );
-
         res.json({ token, user: { id: user.id, role: user.role } });
     } catch (err) {
+        console.error('Login error:', err);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
