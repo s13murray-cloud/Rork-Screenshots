@@ -5,6 +5,7 @@ let poolConfig: PoolConfig = {
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
+    options: '-c search_path=public',
 };
 
 // Use DATABASE_URL if provided (preferred for Supabase), otherwise fallback to individual vars

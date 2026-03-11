@@ -8,7 +8,7 @@ export const login = async (req: Request, res: Response) => {
     try {
         const password_hash = 'hashed_' + password;
         const result = await db.query(
-            'SELECT u.id, u.email, u.first_name, u.last_name, r.name as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = $1 AND u.password_hash = $2',
+            'SELECT u.id, u.email, u.first_name, u.last_name, r.name as role FROM public.users u JOIN public.roles r ON u.role_id = r.id WHERE u.email = $1 AND u.password_hash = $2',
             [email, password_hash]
         );
         if (result.rows.length === 0) {
