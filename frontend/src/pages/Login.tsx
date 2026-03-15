@@ -87,18 +87,3 @@ export function Login() {
         </div>
     );
 }
-```
-
-Save the file, then run these three commands in the VS Code terminal:
-
-**Command 1:**
-```
-git add.
-```
-**Command 2:**
-```
-git commit - m "fix: add email field to login page"
-    ```
-**Command 3:**
-```
-git push
